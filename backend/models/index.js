@@ -41,6 +41,11 @@ db.Account = Account(sequelize, DataTypes);
 import VerificationToken from "./verificationTokenModel.js"
 db.VerificationToken = VerificationToken(sequelize, DataTypes);
 
+db.User.hasMany(db.Account, { foreignKey: "idUser" });
+db.Account.belongsTo(db.User, { foreignKey: "idUser" });
+
+db.User.hasMany(db.Session, { foreignKey: "idUser" });
+db.Session.belongsTo(db.User, { foreignKey: "idUser" });
 
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Resync Db");

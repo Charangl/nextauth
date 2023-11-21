@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
         },
         expires: {
-            type: DataTypes.TIMESTAMP,
+            type: DataTypes.TIME,
             allowNull: false,
         },
     });

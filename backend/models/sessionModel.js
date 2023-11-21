@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
             autoIncrement: true,
         },
         expires: {
-            type: DataTypes.TIMESTAMP,
+            type: DataTypes.TIME,
             allowNull: false,
         },
         sessionToken: {
