@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
+import User from "../../../../backend/models/userModel.js"
 
 export const authOptions = {
     providers: [
@@ -20,18 +21,21 @@ export const authOptions = {
                 password: { label: "Password", placeholder: "Password" },
             },
             async authorize(credentials, req) {
-                const user = { id: "1", name: "luam", email: "luam@example.com", password: "1234" }
+                const existingUser = await User.findOne({ where: { email: credentials.email } });
 
-                if (user) {
-                    return user
-                } else { return null }
-            }
-        })
-    ],
-    secret: process.env.NEXTAUTH_SECRET,
-}
-
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
-
-
+                if (!existingUser) {
+                  await User.create({
+                    email: credentials.email,
+                    password: credentials.password, 
+                  });
+                }
+        
+                return existingUser ? existingUser : null;
+              },
+            }),
+          ],
+          secret: process.env.NEXTAUTH_SECRET,
+        };
+        
+        const handler = NextAuth(authOptions);
+        export { handler as GET, handler as POST };
