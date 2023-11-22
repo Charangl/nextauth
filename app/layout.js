@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import AuthProvider from './components/AuthProvider'
+import Toast from './components/Toast/Toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         <main>
           <AuthProvider>
             {children}
+            <Toast/>
           </AuthProvider>
         </main>
       </body>
