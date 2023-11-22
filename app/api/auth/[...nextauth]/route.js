@@ -4,6 +4,10 @@ import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../../backend/models/userModel.js"
 import bcrypt from "bcrypt"
+import SequelizeAdapter from "@auth/sequelize-adapter";
+import { Sequelize } from "sequelize";
+
+const sequelize = new Sequelize("yourconnectionstring")
 
 export const authOptions = {
     providers: [
@@ -38,6 +42,7 @@ export const authOptions = {
               },
             }),
           ],
+          adapter: SequelizeAdapter(sequelize),
           secret: process.env.NEXTAUTH_SECRET,
         };
         
