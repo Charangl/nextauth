@@ -3,6 +3,7 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../../backend/models/userModel.js"
+import bcrypt from "bcrypt"
 
 export const authOptions = {
     providers: [
@@ -22,11 +23,14 @@ export const authOptions = {
             },
             async authorize(credentials, req) {
                 const existingUser = await User.findOne({ where: { email: credentials.email } });
-
+        
                 if (!existingUser) {
+                  const saltRounds = 10;
+                  const hashedPassword = await bcrypt.hash(credentials.password, saltRounds);
+        
                   await User.create({
                     email: credentials.email,
-                    password: credentials.password, 
+                    password: hashedPassword, 
                   });
                 }
         
