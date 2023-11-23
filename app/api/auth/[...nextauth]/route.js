@@ -6,8 +6,23 @@ import User from "../../../../backend/models/userModel.js"
 import bcrypt from "bcrypt"
 import SequelizeAdapter from "@auth/sequelize-adapter";
 import { Sequelize } from "sequelize";
+import dbConfig from "@/backend/config/db.config.js";
 
-const sequelize = new Sequelize("yourconnectionstring")
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.user,
+  dbConfig.password,
+  {
+      host: dbConfig.host,
+      dialect: dbConfig.dialect,
+      pool: {
+          max: dbConfig.pool.max,
+          min: dbConfig.pool.min,
+          acquire: dbConfig.pool.acquire,
+          idle: dbConfig.pool.idle,
+      },
+  }
+);
 
 export const authOptions = {
     providers: [
