@@ -14,12 +14,12 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
         },
         providerAccountId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         refresh_token: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         access_token: {
             type: DataTypes.STRING,
@@ -38,12 +38,12 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
         },
         id_token: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(1500),
             allowNull: false,
         },
         session_state: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         }
     });
 
